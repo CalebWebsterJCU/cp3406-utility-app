@@ -1,13 +1,9 @@
 package com.example.cp3406utilityapp;
 
-import org.apache.hc.core5.http.ParseException;
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-import java.io.IOException;
+import org.junit.Test;
 
-import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.IPlaylistItem;
 
 /**
