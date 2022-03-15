@@ -44,22 +44,27 @@ public class TopSongsService {
         }
     }
 
-    public ArrayList<IPlaylistItem> getTopSongs() {
+    public void getTopSongs(TopSongsCallback topSongsCallback) {
         try {
+            connectClientCredentials();
             GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
             PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
             // Convert PlaylistTrack to IPlaylistItem???
-            IPlaylistItem[] tracks = new IPlaylistItem[50];
+            ArrayList<IPlaylistItem> songs = new ArrayList<>();
             for (int i = 0; i < 50; i++) {
-                tracks[i] = playlistTracks[i].getTrack();
+                songs.add(playlistTracks[i].getTrack());
             }
-            Log.e(TAG, "Successfully retrieved album tracks.");
-            return new ArrayList<>(Arrays.asList(tracks));
+            System.out.println("Successfully retrieved album tracks.");
+            topSongsCallback.onResponse(songs);
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            Log.e(TAG, "Failed to retrieve album tracks.");
             System.out.println("Failed to retrieve album tracks.");
-            e.printStackTrace();
-            return null;
+            topSongsCallback.onError("Failed to retrieve album tracks.");
         }
+    }
+
+    public interface TopSongsCallback {
+        void onError(String errorMessage);
+
+        void onResponse(ArrayList<IPlaylistItem> songs);
     }
 }

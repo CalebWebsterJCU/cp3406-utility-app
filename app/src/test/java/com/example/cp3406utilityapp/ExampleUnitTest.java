@@ -21,18 +21,18 @@ public class ExampleUnitTest {
 
     @Test
     public void serviceCanConnect() {
-        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
-        assertTrue(service.connectClientCredentials());
+//        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
+//        assertTrue(service.connectClientCredentials());
     }
 
     @Test
     public void serviceCanGetTopSongs() {
-        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
-        service.connectClientCredentials();
-        ArrayList<IPlaylistItem> tracks = service.getTopSongs();
-        assertNotNull(tracks);
-        for (IPlaylistItem track : tracks) {
-            System.out.println(track.getName());
-        }
+//        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
+//        service.connectClientCredentials();
+//        ArrayList<IPlaylistItem> tracks = service.getTopSongs();
+//        assertNotNull(tracks);
+//        for (IPlaylistItem track : tracks) {
+//            System.out.println(track.getName());
+//        }
     }
 }
