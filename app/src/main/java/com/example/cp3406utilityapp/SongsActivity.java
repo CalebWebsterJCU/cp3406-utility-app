@@ -26,23 +26,25 @@ public class SongsActivity extends AppCompatActivity {
         songsListView = (ListView) findViewById(R.id.lv_songs);
 
         songsService = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
-        getSongs();
+        loadSongs();
     }
 
-    public void getSongs() {
+    public void loadSongs() {
         songsService.getTopSongs(new TopSongsService.TopSongsCallback() {
             @Override
-            public void onError(String errorMessage) {
-                Log.e(TAG, "Failed to retrieve album tracks.");
-                Toast.makeText(getApplicationContext(), "Failed to retrieve album tracks.", Toast.LENGTH_LONG).show();
+            // Tell getTopSongs() how to complain.
+            public void complain(String tag, String errorMessage) {
+                Log.e(tag, errorMessage);
+                Toast.makeText(getApplicationContext(), "Failed to retrieve top songs.", Toast.LENGTH_LONG).show();
+                // TODO: Go back to main.
             }
 
             @Override
-            public void onResponse(ArrayList<IPlaylistItem> songs) {
+            // Tell getTopSongs() how to respond.
+            public void respond(ArrayList<IPlaylistItem> songs) {
                 SongListAdapter adapter = new SongListAdapter(SongsActivity.this, R.layout.song_list_item, songs);
                 songsListView.setAdapter(adapter);
-                Log.e(TAG,"Successfully retrieved album tracks.");
-                Toast.makeText(getApplicationContext(), "Successfully retrieved album tracks.", Toast.LENGTH_LONG).show();
+                // TODO: implement.
             }
         });
     }
