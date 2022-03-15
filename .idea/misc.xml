@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_main.xml" value="0.35885416666666664" />
+        <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_songs.xml" value="0.359375" />
+        <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/song_list_item.xml" value="0.359375" />
         <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>

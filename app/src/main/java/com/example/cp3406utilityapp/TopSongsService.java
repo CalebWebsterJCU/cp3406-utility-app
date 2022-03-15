@@ -7,6 +7,8 @@ import com.neovisionaries.i18n.CountryCode;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
@@ -42,7 +44,7 @@ public class TopSongsService {
         }
     }
 
-    public IPlaylistItem[] getTopSongs() {
+    public ArrayList<IPlaylistItem> getTopSongs() {
         try {
             GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
             PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
@@ -52,7 +54,7 @@ public class TopSongsService {
                 tracks[i] = playlistTracks[i].getTrack();
             }
             Log.e(TAG, "Successfully retrieved album tracks.");
-            return tracks;
+            return new ArrayList<>(Arrays.asList(tracks));
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             Log.e(TAG, "Failed to retrieve album tracks.");
             System.out.println("Failed to retrieve album tracks.");

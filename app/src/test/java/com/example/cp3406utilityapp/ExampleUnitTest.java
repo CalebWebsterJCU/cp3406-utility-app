@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import se.michaelthelin.spotify.model_objects.IPlaylistItem;
 
 /**
@@ -27,7 +29,7 @@ public class ExampleUnitTest {
     public void serviceCanGetTopSongs() {
         TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
         service.connectClientCredentials();
-        IPlaylistItem[] tracks = service.getTopSongs();
+        ArrayList<IPlaylistItem> tracks = service.getTopSongs();
         assertNotNull(tracks);
         for (IPlaylistItem track : tracks) {
             System.out.println(track.getName());
