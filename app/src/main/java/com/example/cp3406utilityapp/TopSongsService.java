@@ -29,37 +29,27 @@ public class TopSongsService {
         spotifyApi = new SpotifyApi.Builder().setClientId(clientId).setClientSecret(clientSecret).build();
     }
 
-    public boolean connectClientCredentials() {
-        try {
-            // Create a credentials request and get access token.
-            ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-            ClientCredentials clientCreds = clientCredentialsRequest.execute();
-            spotifyApi.setAccessToken(clientCreds.getAccessToken());
-            Log.e(TAG, "Successfully connected to Spotify API.");
-            Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn());
-            return true;
-        } catch (IOException | SpotifyWebApiException | ParseException e) {
-            Log.e(TAG, "Failed to connect to Spotify API.");
-            return false;
-        }
+    public boolean connectClientCredentials()
+            throws IOException, SpotifyWebApiException, ParseException {
+        // Create a credentials request and get access token.
+        ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+        ClientCredentials clientCreds = clientCredentialsRequest.execute();
+        spotifyApi.setAccessToken(clientCreds.getAccessToken());
+        Log.e(TAG, "Successfully connected to Spotify API.");
+        Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn());
+        return true;
     }
 
-    public ArrayList<IPlaylistItem> getTopSongs() {
-        try {
-            GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
-            PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
-            // Convert PlaylistTrack to IPlaylistItem???
-            IPlaylistItem[] tracks = new IPlaylistItem[50];
-            for (int i = 0; i < 50; i++) {
-                tracks[i] = playlistTracks[i].getTrack();
-            }
-            Log.e(TAG, "Successfully retrieved album tracks.");
-            return new ArrayList<>(Arrays.asList(tracks));
-        } catch (IOException | SpotifyWebApiException | ParseException e) {
-            Log.e(TAG, "Failed to retrieve album tracks.");
-            System.out.println("Failed to retrieve album tracks.");
-            e.printStackTrace();
-            return null;
+    public ArrayList<IPlaylistItem> getTopSongs()
+            throws IOException, SpotifyWebApiException, ParseException {
+        GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
+        PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
+        // Convert PlaylistTrack to IPlaylistItem???
+        IPlaylistItem[] tracks = new IPlaylistItem[50];
+        for (int i = 0; i < 50; i++) {
+            tracks[i] = playlistTracks[i].getTrack();
         }
+        Log.e(TAG, "Successfully retrieved album tracks.");
+        return new ArrayList<>(Arrays.asList(tracks));
     }
 }
