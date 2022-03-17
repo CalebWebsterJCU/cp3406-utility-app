@@ -9,30 +9,29 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import se.michaelthelin.spotify.model_objects.IPlaylistItem;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
-public class SongListAdapter extends ArrayAdapter<IPlaylistItem> {
+public class SongListAdapter extends ArrayAdapter<Track> {
 
     private Context context;
     private int resource;
 
-    public SongListAdapter(Context context, int resource, ArrayList<IPlaylistItem> songs) {
+    public SongListAdapter(Context context, int resource, ArrayList<Track> songs) {
         super(context, resource, songs);
         this.context = context;
         this.resource = resource;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        IPlaylistItem song = getItem(position);
+        Track song = getItem(position);
         // Layout inflater used to convert resource view into usable format.
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
         // Now we can fill the converted view with our song data.
         TextView songNameText = convertView.findViewById(R.id.tv_songName);
         TextView artistNameText = convertView.findViewById(R.id.tv_artistName);
-        // TODO: get artist name.
         songNameText.setText(String.valueOf(song.getName()));
-//        artistNameText.setText(String.valueOf(song.getArtist()));
+        artistNameText.setText(String.valueOf(song.getArtists()[0].getName()));
 
         return convertView;
     }

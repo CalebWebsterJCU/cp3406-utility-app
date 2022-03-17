@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.IPlaylistItem;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 public class SongsActivity extends AppCompatActivity {
 
@@ -30,24 +30,24 @@ public class SongsActivity extends AppCompatActivity {
         new GetSongsTask().execute();
     }
 
-    class GetSongsTask extends AsyncTask<Void, Void, ArrayList<IPlaylistItem>> {
+    class GetSongsTask extends AsyncTask<Void, Void, ArrayList<Track>> {
 
         @Override
-        protected ArrayList<IPlaylistItem> doInBackground(Void... voids) {
+        protected ArrayList<Track> doInBackground(Void... voids) {
             try {
                 topSongsService.connectClientCredentials();
                 return topSongsService.getTopSongs();
             } catch (IOException | SpotifyWebApiException | ParseException e) {
-                Toast.makeText(getApplicationContext(), "Failed to get top songs.", Toast.LENGTH_LONG).show();
+                return null;
             }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<IPlaylistItem> songs) {
+        protected void onPostExecute(ArrayList<Track> songs) {
             if (songs != null) {
                 songsListView.setAdapter(new SongListAdapter(getApplicationContext(), R.layout.song_list_item, songs));
             } else {
+                Toast.makeText(getApplicationContext(), "Failed to get top songs.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SongsActivity.this, MainActivity.class);
                 startActivity(intent);
             }

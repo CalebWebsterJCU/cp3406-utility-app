@@ -12,16 +12,16 @@ import java.util.Arrays;
 
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.IPlaylistItem;
 import se.michaelthelin.spotify.model_objects.credentials.ClientCredentials;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 import se.michaelthelin.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 
 public class TopSongsService {
 
     public static final String TAG = "TopSongsService";
-    public static final String albumId = "37i9dQZF1DXcBWIGoYBM5M";
+    public static final String albumId = "37i9dQZF1DXcBWIGoYBM5M";  // 37i9dQZF1DXcBWIGoYBM5M
     private final SpotifyApi spotifyApi;
 
     public TopSongsService(String clientId, String clientSecret) {
@@ -40,14 +40,17 @@ public class TopSongsService {
         return true;
     }
 
-    public ArrayList<IPlaylistItem> getTopSongs()
+    public ArrayList<Track> getTopSongs()
             throws IOException, SpotifyWebApiException, ParseException {
         GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
         PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
-        // Convert PlaylistTrack to IPlaylistItem???
-        IPlaylistItem[] tracks = new IPlaylistItem[50];
+        Track[] tracks = new Track[50];
         for (int i = 0; i < 50; i++) {
-            tracks[i] = playlistTracks[i].getTrack();
+            Track track = (Track) playlistTracks[i].getTrack();
+            // PlaylistTrack.getTrack() can be a Episode or a Track, which both implement IPlaylistItem.
+            // Since we know the items in this playlist are Tracks, we can cast to type Track.
+            System.out.printf("%s by %s%n", track.getName(), Arrays.toString(track.getArtists()));
+            tracks[i] = track;
         }
         Log.e(TAG, "Successfully retrieved album tracks.");
         return new ArrayList<>(Arrays.asList(tracks));
