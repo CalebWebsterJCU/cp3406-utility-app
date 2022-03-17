@@ -36,7 +36,7 @@ public class TopSongsService {
         ClientCredentials clientCreds = clientCredentialsRequest.execute();
         spotifyApi.setAccessToken(clientCreds.getAccessToken());
         Log.e(TAG, "Successfully connected to Spotify API.");
-        Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn());
+        Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn() + " seconds.");
         return true;
     }
 
