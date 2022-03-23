@@ -24,4 +24,6 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="save">Save</string>
     <string name="settings">Settings</string>
+    <string name="song_limit_hint">Enter song limit…</string>
+    <string name="playlist_id_hint">Enter playlist ID…</string>
 </resources>
