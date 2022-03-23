@@ -30,8 +30,10 @@ public class SongListAdapter extends ArrayAdapter<Song> {
         // Now we can fill the converted view with our song data.
         TextView songNameText = convertView.findViewById(R.id.tv_songName);
         TextView artistNameText = convertView.findViewById(R.id.tv_artistName);
+        TextView popularityText = convertView.findViewById(R.id.tv_popularity);
         songNameText.setText(String.valueOf(song.getName()));
         artistNameText.setText(String.valueOf(song.getArtist()));
+        popularityText.setText(String.valueOf("Popularity: " + song.getPopularity()));
 
         return convertView;
     }

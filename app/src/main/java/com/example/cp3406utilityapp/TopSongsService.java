@@ -50,8 +50,8 @@ public class TopSongsService {
             Track track = (Track) playlistTracks[i].getTrack();
             // PlaylistTrack.getTrack() can be a Episode or a Track, which both implement IPlaylistItem.
             // Since we know the items in this playlist are Tracks, we can cast to type Track.
-            System.out.printf("%s by %s%n", track.getName(), Arrays.toString(track.getArtists()));
-            songs[i] = new Song(track.getName(), track.getArtists()[0].getName());
+//            System.out.printf("%s by %s%n", track.getName(), Arrays.toString(track.getArtists()));
+            songs[i] = new Song(track.getName(), track.getArtists()[0].getName(), track.getPopularity());
         }
         Log.e(TAG, "Successfully retrieved album tracks.");
         return new ArrayList<>(Arrays.asList(songs));
