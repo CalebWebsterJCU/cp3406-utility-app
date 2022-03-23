@@ -19,8 +19,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="playlist_id_hint">Playlist ID:</string>
-    <string name="max_no_songs_hint">Max No. Songs:</string>
+    <string name="playlist_id_label">Playlist ID:</string>
+    <string name="song_limit_label">Song Limit:</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="save">Save</string>
     <string name="settings">Settings</string>

@@ -20,9 +20,9 @@ import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest
 
 public class TopSongsService {
 
-    public static final String TAG = "TopSongsService";
-    public static final String albumId = "37i9dQZF1DXcBWIGoYBM5M";  // 37i9dQZF1DXcBWIGoYBM5M
+    // 37i9dQZF1DXcBWIGoYBM5M
     private final SpotifyApi spotifyApi;
+    public static final String TAG = "TopSongsService";
 
     public TopSongsService(String clientId, String clientSecret) {
         // Initialize Spotify API.
@@ -40,9 +40,9 @@ public class TopSongsService {
         return true;
     }
 
-    public ArrayList<Track> getTopSongs()
+    public ArrayList<Track> getTopSongs(String albumId, int songLimit)
             throws IOException, SpotifyWebApiException, ParseException {
-        GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
+        GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
         PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
         Track[] tracks = new Track[50];
         for (int i = 0; i < 50; i++) {
