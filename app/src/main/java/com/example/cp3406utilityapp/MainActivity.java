@@ -12,7 +12,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS_NAME = "settings";
     private SharedPreferences settingsData;
-    private Button getSongsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

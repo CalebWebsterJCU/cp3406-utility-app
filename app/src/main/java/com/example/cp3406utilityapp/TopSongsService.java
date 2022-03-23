@@ -40,19 +40,20 @@ public class TopSongsService {
         return true;
     }
 
-    public ArrayList<Track> getTopSongs(String albumId, int songLimit)
+    public ArrayList<Song> getTopSongs(String albumId, int songLimit)
             throws IOException, SpotifyWebApiException, ParseException {
         GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
         PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
-        Track[] tracks = new Track[50];
+        // Convert Track objects to Song objects, which are serializable.
+        Song[] songs = new Song[50];
         for (int i = 0; i < 50; i++) {
             Track track = (Track) playlistTracks[i].getTrack();
             // PlaylistTrack.getTrack() can be a Episode or a Track, which both implement IPlaylistItem.
             // Since we know the items in this playlist are Tracks, we can cast to type Track.
             System.out.printf("%s by %s%n", track.getName(), Arrays.toString(track.getArtists()));
-            tracks[i] = track;
+            songs[i] = new Song(track.getName(), track.getArtists()[0].getName());
         }
         Log.e(TAG, "Successfully retrieved album tracks.");
-        return new ArrayList<>(Arrays.asList(tracks));
+        return new ArrayList<>(Arrays.asList(songs));
     }
 }
