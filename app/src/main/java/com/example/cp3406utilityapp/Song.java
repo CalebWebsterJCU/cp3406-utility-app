@@ -8,11 +8,13 @@ public class Song implements Parcelable {
     private final String name;
     private final String artist;
     private final int popularity;
+    private final String id;
 
-    public Song(String name, String artist, int popularity) {
+    public Song(String name, String artist, int popularity, String id) {
         this.name = name;
         this.artist = artist;
         this.popularity = popularity;
+        this.id = id;
     }
 
     public String getName() {
@@ -27,14 +29,19 @@ public class Song implements Parcelable {
         return popularity;
     }
 
+    public String getId() {
+        return id;
+    }
+
     protected Song(Parcel in) {
         // Create new song from string array in parcel.
-        String[] data = new String[3];
+        String[] data = new String[4];
         // Read string data from parcel.
         in.readStringArray(data);
         this.name = data[0];
         this.artist = data[1];
         this.popularity = Integer.parseInt(data[2]);
+        this.id = data[3];
     }
 
     public static final Creator<Song> CREATOR = new Creator<Song>() {
