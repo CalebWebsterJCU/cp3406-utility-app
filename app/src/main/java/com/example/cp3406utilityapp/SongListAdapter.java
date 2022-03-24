@@ -41,11 +41,6 @@ public class SongListAdapter extends ArrayAdapter<Song> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String uri = String.format("spotify:track:%s", song.getId());
-//                Intent launchSpotify = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//                launchSpotify.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(launchSpotify);
-
                 String url = String.format("https://open.spotify.com/track/%s", song.getId());
                 Intent launchSpotify = new Intent(Intent.ACTION_VIEW);
                 launchSpotify.setData(Uri.parse(url));
