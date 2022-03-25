@@ -12,15 +12,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.apache.hc.core5.http.ParseException;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.IPlaylistItem;
+
 
 public class SongsActivity extends AppCompatActivity {
 
     private static final String TAG = "SongsActivity";
+
     private static final String SHARED_PREFS_NAME = "settings";
     private static final String CLIENT_ID = "87f7150f2a784eb0bc252cc29436f4af";
     private static final String CLIENT_SECRET = "ba29f02133bb422487493547c3f2fa04";
@@ -35,6 +36,7 @@ public class SongsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs);
+
         settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
         songsListView = findViewById(R.id.lv_songs);
 
