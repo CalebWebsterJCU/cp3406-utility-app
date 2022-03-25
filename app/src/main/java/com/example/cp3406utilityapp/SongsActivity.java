@@ -61,11 +61,12 @@ public class SongsActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Song> doInBackground(Void... voids) {
             String albumId = settingsData.getString("playlistId", DEFAULT_PLAYLIST);
+            boolean limitSongs = settingsData.getBoolean("willLimitSongs", false);
             int songLimit = settingsData.getInt("songLimit", DEFAULT_SONG_LIMIT);
             try {
                 topSongsService = new TopSongsService(CLIENT_ID, CLIENT_SECRET);
                 topSongsService.connectClientCredentials();
-                return topSongsService.getTopSongs(albumId, songLimit);
+                return topSongsService.getTopSongs(albumId, limitSongs, songLimit);
             } catch (IOException | SpotifyWebApiException | ParseException e) {
                 return null;
             }

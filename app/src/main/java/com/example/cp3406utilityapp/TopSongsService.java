@@ -8,6 +8,7 @@ import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
@@ -38,9 +39,16 @@ public class TopSongsService {
         Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn() + " seconds.");
     }
 
-    public ArrayList<Song> getTopSongs(String albumId, int songLimit)
+    public ArrayList<Song> getTopSongs(String albumId, boolean limitSongs, int songLimit)
             throws IOException, SpotifyWebApiException, ParseException {
-        GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
+        GetPlaylistsItemsRequest getPlaylistsItemsRequest;
+        if (limitSongs) {
+             getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
+            System.out.println("Limited.");
+        } else {
+            getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).market(CountryCode.AU).build();
+            System.out.println("Not Limited.");
+        }
         PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
         // Convert Track objects to Song objects, which are serializable.
         Song[] songs = new Song[playlistTracks.length];
