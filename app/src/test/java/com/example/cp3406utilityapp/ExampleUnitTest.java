@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import se.michaelthelin.spotify.model_objects.IPlaylistItem;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -19,20 +19,20 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void serviceCanConnect() {
+//    @Test
+//    public void serviceCanConnect() {
 //        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
 //        assertTrue(service.connectClientCredentials());
-    }
-
-    @Test
-    public void serviceCanGetTopSongs() {
+//    }
+//
+//    @Test
+//    public void serviceCanGetTopSongs() {
 //        TopSongsService service = new TopSongsService("87f7150f2a784eb0bc252cc29436f4af", "ba29f02133bb422487493547c3f2fa04");
 //        service.connectClientCredentials();
-//        ArrayList<IPlaylistItem> tracks = service.getTopSongs();
+//        ArrayList<Track> tracks = service.getTopSongs();
 //        assertNotNull(tracks);
-//        for (IPlaylistItem track : tracks) {
+//        for (Track track : tracks) {
 //            System.out.println(track.getName());
 //        }
-    }
+//    }
 }

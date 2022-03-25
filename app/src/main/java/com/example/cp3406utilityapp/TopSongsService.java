@@ -11,75 +11,47 @@ import java.util.ArrayList;
 
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.IPlaylistItem;
 import se.michaelthelin.spotify.model_objects.credentials.ClientCredentials;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 import se.michaelthelin.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 
 public class TopSongsService {
 
-    public static final String TAG = "TopSongsService";
-    public static final String albumId = "37i9dQZF1DXcBWIGoYBM5M";
+    // 37i9dQZF1DXcBWIGoYBM5M
     private final SpotifyApi spotifyApi;
+    public static final String TAG = "TopSongsService";
 
     public TopSongsService(String clientId, String clientSecret) {
         // Initialize Spotify API.
         spotifyApi = new SpotifyApi.Builder().setClientId(clientId).setClientSecret(clientSecret).build();
     }
 
-    public interface ClientCredentialsCallback {
-        void complain(String tag, String errorMessage);
-
-        void respond();
+    public void connectClientCredentials()
+            throws IOException, SpotifyWebApiException, ParseException {
+        // Create a credentials request and get access token.
+        ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+        ClientCredentials clientCreds = clientCredentialsRequest.execute();
+        spotifyApi.setAccessToken(clientCreds.getAccessToken());
+        Log.e(TAG, "Successfully connected to Spotify API.");
+        Log.e(TAG, "Access token expires in: " + clientCreds.getExpiresIn() + " seconds.");
     }
 
-    public void connectClientCredentials(ClientCredentialsCallback toGetTopSongs) {
-        try {
-            // Create a credentials request and get access token.
-            ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-            ClientCredentials clientCreds = clientCredentialsRequest.execute();
-            spotifyApi.setAccessToken(clientCreds.getAccessToken());
-            Log.e(TAG, "Connected! Access token expires in: " + clientCreds.getExpiresIn());
-            // Respond to getTopSongs().
-            toGetTopSongs.respond();
-        } catch (IOException | SpotifyWebApiException | ParseException e) {
-            // Complain to getTopSongs().
-            toGetTopSongs.complain(TAG, "Failed to connect to Spotify API.");
+    public ArrayList<Song> getTopSongs(String albumId, int songLimit)
+            throws IOException, SpotifyWebApiException, ParseException {
+        GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
+        PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
+        // Convert Track objects to Song objects, which are serializable.
+        Song[] songs = new Song[playlistTracks.length];
+        for (int i = 0; i < songs.length; i++) {
+            Track track = (Track) playlistTracks[i].getTrack();
+            // PlaylistTrack.getTrack() can be a Episode or a Track, which both implement IPlaylistItem.
+            // Since we know the items in this playlist are Tracks, we can cast to type Track.
+            System.out.printf("%s by %s pop=%s id=%s%n", track.getName(), track.getArtists()[0].getName(), track.getPopularity(), track.getId());
+            songs[i] = new Song(track.getName(), track.getArtists()[0].getName(), track.getPopularity(), track.getId());
         }
-    }
-
-    public interface TopSongsCallback {
-        void complain(String tag, String errorMessage);
-
-        void respond(ArrayList<IPlaylistItem> songs);
-    }
-
-    public void getTopSongs(TopSongsCallback toGetSongs) {
-        connectClientCredentials(new ClientCredentialsCallback() {
-            @Override
-            // Tell connectClientCredentials() how to complain.
-            public void complain(String tag, String errorMessage) {
-                toGetSongs.complain(tag, errorMessage);
-            }
-
-            @Override
-            // Tell connectClientCredentials() how to respond.
-            public void respond() {
-                try {
-                    GetPlaylistsItemsRequest getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(50).market(CountryCode.AU).build();
-                    PlaylistTrack[] playlistTracks = getPlaylistsItemsRequest.execute().getItems();
-                    // Convert PlaylistTrack to IPlaylistItem???
-                    ArrayList<IPlaylistItem> songs = new ArrayList<>();
-                    for (int i = 0; i < 50; i++) {
-                        songs.add(playlistTracks[i].getTrack());
-                    }
-                    toGetSongs.respond(songs);
-                } catch (IOException | SpotifyWebApiException | ParseException e) {
-                    toGetSongs.complain(TAG, "Failed to get top songs.");
-                }
-            }
-        });
-
+        Log.e(TAG, "Successfully retrieved album tracks.");
+        return new ArrayList<>(Arrays.asList(songs));
     }
 }
