@@ -113,7 +113,7 @@ public class SongsActivity extends AppCompatActivity {
             // Load songs into ListView with adapter.
             if (loadedSongs != null) {
                 savedSongs = loadedSongs;
-                songsListView.setAdapter(new SongListAdapter(getApplicationContext(), R.layout.song_list_item, loadedSongs));
+                songsListView.setAdapter(new SongListAdapter(SongsActivity.this, R.layout.song_list_item, loadedSongs));
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get top songs.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SongsActivity.this, MainActivity.class);
