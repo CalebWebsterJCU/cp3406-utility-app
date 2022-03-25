@@ -3,14 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_songs.xml" value="0.3359375" />
-        <entry key="..\:/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/song_list_item.xml" value="0.3359375" />
         <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_main.xml" value="0.35885416666666664" />
         <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_songs.xml" value="0.359375" />
         <entry key="..\:/Users/Caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/song_list_item.xml" value="0.359375" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.114" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/drawable/background_1.xml" value="0.114" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/drawable/background_2.xml" value="0.1" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/drawable/background_3.xml" value="0.1" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.114" />
         <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_settings.xml" value="0.35260416666666666" />
-        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/song_list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_settings.xml" value="0.3625" />
+        <entry key="..\:/Users/caleb/AndroidStudioProjects/CP3406UtilityApp/app/src/main/res/layout/activity_songs.xml" value="0.23055555555555557" />
       </map>
     </option>
   </component>

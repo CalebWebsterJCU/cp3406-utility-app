@@ -60,6 +60,16 @@
         android:text="@string/dark_mode"
         android:textSize="18sp" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sw_rgbMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/rgb_mode"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"

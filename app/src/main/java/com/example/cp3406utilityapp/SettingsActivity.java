@@ -3,6 +3,7 @@ package com.example.cp3406utilityapp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText songLimitInput;
     private SwitchCompat limitSongsSwitch;
     private SwitchCompat darkModeSwitch;
+    private SwitchCompat rgbModeSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         songLimitInput = findViewById(R.id.et_songLimit);
         limitSongsSwitch = findViewById(R.id.sw_limitSongs);
         darkModeSwitch = findViewById(R.id.sw_darkMode);
+        rgbModeSwitch = findViewById(R.id.sw_rgbMode);
         // Fill data fields from SharedPreferences.
         playlistIdInput.setText(settingsData.getString("playlistId", "37i9dQZF1DXcBWIGoYBM5M"));
         limitSongsSwitch.setChecked(settingsData.getBoolean("willLimitSongs", false));
@@ -42,17 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
             songLimitInput.setVisibility(View.VISIBLE);
         }
         darkModeSwitch.setChecked(settingsData.getBoolean("isDarkMode", false));
-
-        darkModeSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (darkModeSwitch.isChecked()) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
+        rgbModeSwitch.setChecked(settingsData.getBoolean("isRgbMode", false));
 
         limitSongsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +55,24 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     songLimitInput.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
+        rgbModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                darkModeSwitch.setChecked(false);
             }
         });
     }
@@ -80,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putBoolean("willLimitSongs", limitSongsSwitch.isChecked());
         editor.putString("playlistId", playlistIdInput.getText().toString());
         editor.putBoolean("isDarkMode", darkModeSwitch.isChecked());
+        editor.putBoolean("isRgbMode", rgbModeSwitch.isChecked());
         editor.apply();
         finish();
     }
