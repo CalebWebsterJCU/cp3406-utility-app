@@ -1,6 +1,8 @@
 package com.example.cp3406utilityapp;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -71,10 +73,28 @@ public class SettingsActivity extends AppCompatActivity {
 
         rgbModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                darkModeSwitch.setChecked(false);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                setRgbBackground(findViewById(R.id.rootLayout), isChecked);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setRgbBackground(findViewById(R.id.rootLayout), settingsData.getBoolean("isRgbMode", false));
+    }
+
+    private void setRgbBackground(View rootLayout, boolean isOn) {
+        if (isOn) {
+            rootLayout.setBackgroundResource(R.drawable.colour_list);
+            AnimationDrawable anim = (AnimationDrawable) rootLayout.getBackground();
+            anim.setEnterFadeDuration(1000);
+            anim.setExitFadeDuration(1000);
+            anim.start();
+        } else {
+            rootLayout.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     public void saveSettings(View view) {
