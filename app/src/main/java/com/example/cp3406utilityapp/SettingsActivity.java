@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final String TAG = "SettingsActivity";
     private static final String SHARED_PREFS_NAME = "settings";
     private SharedPreferences settingsData;
 
@@ -44,16 +46,15 @@ public class SettingsActivity extends AppCompatActivity {
         limitSongsSwitch.setChecked(settingsData.getBoolean("willLimitSongs", false));
         if (limitSongsSwitch.isChecked()) {
             songLimitInput.setText(String.format(Locale.getDefault(), "%d", settingsData.getInt("songLimit", 0)));
-            songLimitInput.setVisibility(View.VISIBLE);
         }
         darkModeSwitch.setChecked(settingsData.getBoolean("isDarkMode", false));
         rgbModeSwitch.setChecked(settingsData.getBoolean("isRgbMode", false));
 
-        limitSongsSwitch.setOnClickListener(new View.OnClickListener() {
+        limitSongsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 // Show/hide song limit input box.
-                if (limitSongsSwitch.isChecked()) {
+                if (isChecked) {
                     songLimitInput.setVisibility(View.VISIBLE);
                 } else {
                     songLimitInput.setVisibility(View.GONE);
@@ -64,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                // Change dark mode on or off.
+                // Change night mode on or off.
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
@@ -87,6 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         boolean isRgbMode = settingsData.getBoolean("isRgbMode", false);
         setRgbBackground(isRgbMode);
+        Log.d(TAG, "Activity Resumed.");
     }
 
     private void setRgbBackground(boolean isOn) {

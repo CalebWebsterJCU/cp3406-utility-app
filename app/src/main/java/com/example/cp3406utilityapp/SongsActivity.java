@@ -2,6 +2,7 @@ package com.example.cp3406utilityapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,12 @@ public class SongsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_songs);
 
         settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
+
+        boolean isDarkMode = settingsData.getBoolean("isDarkMode", false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
         songsListView = findViewById(R.id.lv_songs);
         // Load songs from saved state.
         if (savedInstanceState == null) {
