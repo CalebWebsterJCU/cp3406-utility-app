@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import java.util.Locale;
@@ -42,10 +43,20 @@ public class SettingsActivity extends AppCompatActivity {
         }
         darkModeSwitch.setChecked(settingsData.getBoolean("isDarkMode", false));
 
+        darkModeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (darkModeSwitch.isChecked()) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
         limitSongsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinearLayout parentLayout = (LinearLayout) limitSongsSwitch.getParent();
                 if (limitSongsSwitch.isChecked()) {
                     songLimitInput.setVisibility(View.VISIBLE);
                 } else {

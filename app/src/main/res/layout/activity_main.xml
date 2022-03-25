@@ -30,32 +30,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <Button
-        android:id="@+id/btn_getSongs"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="openSongs"
-        android:padding="12sp"
-        android:text="@string/get_songs"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="UsingOnClickInXml" />
-
-    <Button
-        android:id="@+id/btn_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="openSettings"
-        android:padding="12sp"
-        android:text="@string/settings"
-        android:textSize="20sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_slogan"
-        app:layout_constraintVertical_bias="0.604"
-        tools:ignore="UsingOnClickInXml" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_slogan">
+
+        <Button
+            android:id="@+id/btn_getSongs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:onClick="openSongs"
+            android:padding="12sp"
+            android:text="@string/get_songs"
+            android:textSize="20sp"
+            tools:ignore="UsingOnClickInXml" />
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:onClick="openSettings"
+            android:padding="12sp"
+            android:text="@string/settings"
+            android:textSize="20sp"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

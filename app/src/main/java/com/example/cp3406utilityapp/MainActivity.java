@@ -11,16 +11,11 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS_NAME = "settings";
-    private SharedPreferences settingsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
-        boolean isDarkMode = settingsData.getBoolean("isDarkMode", false);
-        // TODO: Implement dark mode.
     }
 
     public void openSongs(View view) {
