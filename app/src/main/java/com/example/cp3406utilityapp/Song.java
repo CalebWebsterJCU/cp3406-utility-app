@@ -63,6 +63,6 @@ public class Song implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeStringArray(new String[] {this.name, this.artist});
+        parcel.writeStringArray(new String[]{this.name, this.artist});
     }
 }

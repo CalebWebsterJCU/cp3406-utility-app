@@ -52,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
         limitSongsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Show/hide song limit input box.
                 if (limitSongsSwitch.isChecked()) {
                     songLimitInput.setVisibility(View.VISIBLE);
                 } else {
@@ -63,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                // Change dark mode on or off.
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
@@ -74,19 +76,23 @@ public class SettingsActivity extends AppCompatActivity {
         rgbModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setRgbBackground(findViewById(R.id.rootLayout), isChecked);
+                setRgbBackground(isChecked);
             }
         });
     }
 
     @Override
     protected void onResume() {
+        // Set rgb background on resume.
         super.onResume();
-        setRgbBackground(findViewById(R.id.rootLayout), settingsData.getBoolean("isRgbMode", false));
+        boolean isRgbMode = settingsData.getBoolean("isRgbMode", false);
+        setRgbBackground(isRgbMode);
     }
 
-    private void setRgbBackground(View rootLayout, boolean isOn) {
+    private void setRgbBackground(boolean isOn) {
+        View rootLayout = findViewById(R.id.rootLayout);
         if (isOn) {
+            // Set root layout background and start animation.
             rootLayout.setBackgroundResource(R.drawable.colour_list);
             AnimationDrawable anim = (AnimationDrawable) rootLayout.getBackground();
             anim.setEnterFadeDuration(1000);
@@ -99,7 +105,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void saveSettings(View view) {
         SharedPreferences.Editor editor = settingsData.edit();
-        // Set preferences from fields.
         if (limitSongsSwitch.isChecked()) {
             int songLimit = Integer.parseInt(songLimitInput.getText().toString());
             if (songLimit < 1 || songLimit > 100) {

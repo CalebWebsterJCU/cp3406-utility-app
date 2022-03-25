@@ -24,23 +24,25 @@ public class SongListAdapter extends ArrayAdapter<Song> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+        // Inflate view with new song resource.
         Song song = getItem(position);
-        // Layout inflater used to convert resource view into usable format.
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
-        // Now we can fill the converted view with our song data.
+        // Fill the converted view with song data.
         TextView songNameText = convertView.findViewById(R.id.tv_songName);
         TextView artistNameText = convertView.findViewById(R.id.tv_artistName);
         TextView rankText = convertView.findViewById(R.id.tv_rank);
         TextView popularityText = convertView.findViewById(R.id.tv_popularity);
+
         songNameText.setText(song.getName());
         artistNameText.setText(song.getArtist());
-        rankText.setText(String.format(Locale.getDefault(), "Rank: %d", position+1));
+        rankText.setText(String.format(Locale.getDefault(), "Rank: %d", position + 1));
         popularityText.setText(String.format(Locale.getDefault(), "Popularity: %d%%", song.getPopularity()));
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Open song in browser when clicked.
                 String url = String.format("https://open.spotify.com/track/%s", song.getId());
                 Intent launchSpotify = new Intent(Intent.ACTION_VIEW);
                 launchSpotify.setData(Uri.parse(url));

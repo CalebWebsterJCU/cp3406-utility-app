@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.apache.hc.core5.http.ParseException;
+
 import java.io.IOException;
 import java.util.ArrayList;
+
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.IPlaylistItem;
 
@@ -30,6 +32,7 @@ public class SongsActivity extends AppCompatActivity {
     private static final String CLIENT_SECRET = "ba29f02133bb422487493547c3f2fa04";
     private static final String DEFAULT_PLAYLIST = "37i9dQZF1DXcBWIGoYBM5M";
     private static final int DEFAULT_SONG_LIMIT = 50;
+
     private SharedPreferences settingsData;
     TopSongsService topSongsService;
     ListView songsListView;
@@ -42,7 +45,7 @@ public class SongsActivity extends AppCompatActivity {
 
         settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
         songsListView = findViewById(R.id.lv_songs);
-
+        // Load songs from saved state.
         if (savedInstanceState == null) {
             new GetSongsTask().execute();
             Log.d(TAG, "Loaded from API call.");
@@ -61,12 +64,16 @@ public class SongsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // Set rgb background on resume.
         super.onResume();
-        setRgbBackground(findViewById(R.id.rootLayout), settingsData.getBoolean("isRgbMode", false));
+        boolean isRgbMode = settingsData.getBoolean("isRgbMode", false);
+        setRgbBackground(isRgbMode);
     }
 
-    private void setRgbBackground(View rootLayout, boolean isOn) {
+    private void setRgbBackground(boolean isOn) {
+        View rootLayout = findViewById(R.id.rootLayout);
         if (isOn) {
+            // Set root layout background and start animation.
             rootLayout.setBackgroundResource(R.drawable.colour_list);
             AnimationDrawable anim = (AnimationDrawable) rootLayout.getBackground();
             anim.setEnterFadeDuration(1000);
@@ -81,6 +88,7 @@ public class SongsActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Song> doInBackground(Void... voids) {
+            // Asynchronously get songs from spotify.
             String albumId = settingsData.getString("playlistId", DEFAULT_PLAYLIST);
             boolean limitSongs = settingsData.getBoolean("willLimitSongs", false);
             int songLimit = settingsData.getInt("songLimit", DEFAULT_SONG_LIMIT);
@@ -95,6 +103,7 @@ public class SongsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Song> loadedSongs) {
+            // Load songs into ListView with adapter.
             if (loadedSongs != null) {
                 savedSongs = loadedSongs;
                 songsListView.setAdapter(new SongListAdapter(getApplicationContext(), R.layout.song_list_item, loadedSongs));

@@ -25,12 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // Set rgb background on resume.
         super.onResume();
-        setRgbBackground(findViewById(R.id.rootLayout), settingsData.getBoolean("isRgbMode", false));
+        boolean isRgbMode = settingsData.getBoolean("isRgbMode", false);
+        setRgbBackground(isRgbMode);
     }
 
-    private void setRgbBackground(View rootLayout, boolean isOn) {
+    private void setRgbBackground(boolean isOn) {
+        View rootLayout = findViewById(R.id.rootLayout);
         if (isOn) {
+            // Set root layout background and start animation.
             rootLayout.setBackgroundResource(R.drawable.colour_list);
             AnimationDrawable anim = (AnimationDrawable) rootLayout.getBackground();
             anim.setEnterFadeDuration(1000);

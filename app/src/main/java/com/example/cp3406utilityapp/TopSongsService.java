@@ -42,8 +42,9 @@ public class TopSongsService {
     public ArrayList<Song> getTopSongs(String albumId, boolean limitSongs, int songLimit)
             throws IOException, SpotifyWebApiException, ParseException {
         GetPlaylistsItemsRequest getPlaylistsItemsRequest;
+        // If a song limit was specified, limit request to the amount. Otherwise, do not limit.
         if (limitSongs) {
-             getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
+            getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).limit(songLimit).market(CountryCode.AU).build();
             System.out.println("Limited.");
         } else {
             getPlaylistsItemsRequest = spotifyApi.getPlaylistsItems(albumId).market(CountryCode.AU).build();
