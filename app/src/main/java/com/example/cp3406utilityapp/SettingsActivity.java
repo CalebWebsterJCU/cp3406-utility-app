@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
+
         // Define fields.
         playlistIdInput = findViewById(R.id.et_playlistId);
         songLimitInput = findViewById(R.id.et_songLimit);
@@ -43,12 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
         rgbModeSwitch = findViewById(R.id.sw_rgbMode);
         // Fill data fields from SharedPreferences.
         playlistIdInput.setText(settingsData.getString("playlistId", "37i9dQZF1DXcBWIGoYBM5M"));
-        limitSongsSwitch.setChecked(settingsData.getBoolean("willLimitSongs", false));
-        if (limitSongsSwitch.isChecked()) {
-            songLimitInput.setText(String.format(Locale.getDefault(), "%d", settingsData.getInt("songLimit", 0)));
-        }
-        darkModeSwitch.setChecked(settingsData.getBoolean("isDarkMode", false));
-        rgbModeSwitch.setChecked(settingsData.getBoolean("isRgbMode", false));
 
         limitSongsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -62,11 +57,18 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        limitSongsSwitch.setChecked(settingsData.getBoolean("willLimitSongs", false));
+        if (limitSongsSwitch.isChecked()) {
+            songLimitInput.setText(String.format(Locale.getDefault(), "%d", settingsData.getInt("songLimit", 0)));
+        }
+        darkModeSwitch.setChecked(settingsData.getBoolean("isDarkMode", false));
+        rgbModeSwitch.setChecked(settingsData.getBoolean("isRgbMode", false));
+
+        darkModeSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            public void onClick(View view) {
                 // Change night mode on or off.
-                if (isChecked) {
+                if (darkModeSwitch.isChecked()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -86,8 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         // Set rgb background on resume.
         super.onResume();
-        boolean isRgbMode = settingsData.getBoolean("isRgbMode", false);
-        setRgbBackground(isRgbMode);
+        setRgbBackground(rgbModeSwitch.isChecked());
         Log.d(TAG, "Activity Resumed.");
     }
 
@@ -100,6 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
             anim.setEnterFadeDuration(1000);
             anim.setExitFadeDuration(1000);
             anim.start();
+            System.out.println("Started animation");
         } else {
             rootLayout.setBackgroundColor(Color.TRANSPARENT);
         }

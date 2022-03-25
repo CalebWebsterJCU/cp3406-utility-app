@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
         settingsData = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
         boolean isDarkMode = settingsData.getBoolean("isDarkMode", false);
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        if (savedInstanceState == null && isDarkMode) {
+            if (settingsData.getBoolean("isDarkMode", false)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
         }
     }
 
